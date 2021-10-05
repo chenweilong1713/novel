@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="/css/style.min.css" rel="stylesheet">
+</head>
+  
+<body>
+<div class="container-fluid p-t-15">
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="tab-content">
+          <div class="tab-pane active">
+            
+              <div class="form-group">
+                <label for="web_site_title" >网站标题</label>
+                <input class="form-control" type="text" id="web_site_title" name="web_site_title" th:value="${title}" placeholder="请输入站点标题" >
+              </div>
+              <div class="form-group">
+                <label for="web_site_logo">LOGO图片</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="web_site_logo" id="web_site_logo" th:value="${logo}" />
+                  <div class="input-group-btn"><button class="btn btn-default" type="button" id="btn_logo">上传图片</button></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="web_site_keywords">站点关键词</label>
+                <input class="form-control" type="text" id="web_site_keywords" name="web_site_keywords" th:value="${keyword}" placeholder="请输入站点关键词" >
+                <small class="help-block">网站搜索引擎关键字</small>
+              </div>
+              <div class="form-group">
+                <label for="web_site_description">站点描述</label>
+                <textarea class="form-control" id="web_site_description" rows="5" name="web_site_description" placeholder="请输入站点描述" th:text="${describe}"></textarea>
+                <small class="help-block">网站描述，有利于搜索引擎抓取相关信息</small>
+              </div>
+              <div class="form-group">
+                <label for="web_site_copyright">版权信息</label>
+                <input class="form-control" type="text" id="web_site_copyright" name="web_site_copyright" th:value="${copyright}" placeholder="请输入版权信息" >
+              </div>
+              <div class="form-group">
+                <label for="web_site_icp">备案信息</label>
+                <input class="form-control" type="text" id="web_site_icp" name="web_site_icp" th:value="${web_site_icp}" placeholder="请输入备案信息" >
+              </div>
+              <div class="form-group">
+                <button class="btn  btn-primary"><label></i></label> 确认更新</button>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+<input type="file" id="file_logo" style="display: none">
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<script type="text/javascript" src="/ajax/ajax.js"></script>
+
+<!--消息提示-->
+<script src="/js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="/js/lightyear.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<script type="text/javascript">
+    $(function (){
+        // 点击按钮触发input click 事件
+        $("#btn_logo").click(function (){
+            return $('#file_logo').click();
+        });
+        // 文件input值改变事件
+        $("#file_logo").change(function(){
+            $("#web_site_logo").val($("#file_logo").val())
+        });
+        var title = $("#web_site_title").val()
+
+    })
+</script>
+</body>
+</html>

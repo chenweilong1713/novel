@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>手动爬虫</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid p-t-15">
+
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>URL队列</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>数量</label>
+                        <input class="form-control" type="text" th:value="${url_queue}" id="url_queue" disabled="disabled">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-label btn-primary" id="btn_remove_url">
+                            <label>
+                                <i class="mdi mdi-upload"></i>
+                            </label> 清空队列
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Novel队列</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>数量</label>
+                        <input class="form-control" type="text" th:value="${novel_queue}" id="novel_queue" disabled="disabled">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-label btn-primary" id="btn_removeAll_novel"><label><i class="mdi mdi-upload"></i></label> 清空队列
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<!--消息提示-->
+<script src="/js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="/js/lightyear.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<script type="text/javascript" src="/ajax/ajax.js"></script>
+<script>
+    $(function (){
+        $("#btn_remove_url").click(function (){
+            removeAllUrlQueue()
+        });
+        $("#btn_removeAll_novel").click(function (){
+            removeAllNovelQueue()
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

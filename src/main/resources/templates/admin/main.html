@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>首页 - 光年(Light Year Admin)后台管理系统模板</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.min.css" rel="stylesheet">
+</head>
+<style>
+    #console-body > div {
+        background-color: #2c3e50;
+        color: white;
+        font-size: 14px;
+        height: 600px;
+        overflow: auto;
+    }
+
+    #console-body > div > p {
+        margin-left: 20px;
+    }
+</style>
+<body>
+<div class="container-fluid p-t-15">
+
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-primary">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">小说总数</p>
+                        <p class="h3 text-white m-b-0 fa-1-5x" th:text="${novel_count}+' 本'">102,125.00 本</p>
+                    </div>
+                    <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
+                            class="mdi mdi-currency-cny fa-1-5x"></i></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-danger">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">章节总数</p>
+                        <p class="h3 text-white m-b-0 fa-1-5x" th:text="${chapter_count}+' 章'">920,000</p>
+                    </div>
+                    <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
+                            class="mdi mdi-account fa-1-5x"></i></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-success">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">URL队列任务</p>
+                        <p class="h3 text-white m-b-0 fa-1-5x" th:text="${reptile_site_count}+' 个'">34,005,000</p>
+                    </div>
+                    <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
+                            class="mdi mdi-arrow-down-bold fa-1-5x"></i></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card bg-purple">
+                <div class="card-body clearfix">
+                    <div class="pull-right">
+                        <p class="h6 text-white m-t-0">Novel队列任务</p>
+                        <p class="h3 text-white m-b-0 fa-1-5x" th:text="${reptile_queue_count}+' 个'">153 条</p>
+                    </div>
+                    <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
+                            class="mdi mdi-comment-outline fa-1-5x"></i></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Console</h4>
+            </div>
+            <div class="card-body" id="console-body">
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>URL队列线程</h4>
+            </div>
+            <div class="card-body">
+                <span class="url_message" th:if="${url_thread} == null">已停止......</span>
+                <span class="url_message" th:if="${url_thread} != null">正在运行......</span>
+            </div>
+            <footer class="card-footer">
+                <div class="example-left m-t-10 pull-left">
+                      <span>点击停止按钮,在单次任务完成后才会停止</span>
+                </div>
+                <div class="example-right pull-right">
+                    <button class="btn btn-primary" type="button" id="url_start">启动</button>
+                    <button class="btn btn-danger" type="button" id="url_stop">停止</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Novel队列线程</h4>
+            </div>
+            <div class="card-body">
+                <span class="novel_message" th:if="${novel_thread == null} ">已停止......</span>
+                <span class="novel_message" th:if="${novel_thread != null} ">正在运行......</span>
+            </div>
+            <footer class="card-footer">
+                <div class="example-left m-t-10 pull-left">
+                    <span>点击停止按钮,在单次任务完成后才会停止</span>
+                </div>
+                <div class="example-right pull-right">
+                    <button class="btn btn-primary" type="button" id="novel_start">启动</button>
+                    <button class="btn btn-danger" type="button" id="novel_stop">停止</button>
+                </div>
+            </footer>
+        </div>
+        <div class="card">
+            <footer class="card-footer">
+                若出现无法停止时请到 队列管理 中清除任务在尝试
+            </footer>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+
+<!--消息提示-->
+<script src="/js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="/js/lightyear.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<script type="text/javascript" src="/ajax/ajax.js"></script>
+<script th:inline="javascript">
+    $(function () {
+        var web_socket_url = [[${web_socket_url}]];
+        var websocket = null;
+
+        //判断当前浏览器是否支持WebSocket, 主要此处要更换为自己的地址
+        if ('WebSocket' in window) {
+            websocket = new WebSocket("ws://"+web_socket_url+"/novel/socket");
+        } else {
+            alert('Not support websocket')
+        }
+
+        //连接发生错误的回调方法
+        websocket.onerror = function () {
+            setMessageInnerHTML("error");
+        };
+
+        //连接成功建立的回调方法
+        websocket.onopen = function (event) {
+            setMessageInnerHTML("服务端已链接......");
+        }
+
+        //接收到消息的回调方法
+        websocket.onmessage = function (event) {
+            setMessageInnerHTML(event.data);
+        }
+
+        //连接关闭的回调方法
+        websocket.onclose = function () {
+            setMessageInnerHTML("WebSocket已关闭......");
+        }
+
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function () {
+            websocket.close();
+        }
+
+        //将消息显示在网页上
+        function setMessageInnerHTML(innerHTML) {
+            $("#console-body>div").prepend($("<p>" + innerHTML + "</p>"))
+        }
+
+        //关闭连接
+        function closeWebSocket() {
+            websocket.close();
+        }
+        /********************以上为WebSocket代码************************/
+
+        $("#url_start").click(function (){
+            urlThreadStartAjax("/admin/start/url")
+        });
+
+        $("#url_stop").click(function (){
+           urlThreadCloseAjax("/admin/close/url")
+        });
+
+        $("#novel_start").click(function (){
+            novelThreadStartAjax("/admin/start/novel")
+        });
+
+        $("#novel_stop").click(function (){
+            novelThreadCloseAjax("/admin/close/novel")
+        });
+    })
+
+</script>
+</body>
+</html>

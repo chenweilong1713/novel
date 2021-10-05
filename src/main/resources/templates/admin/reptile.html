@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>手动爬虫</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-fluid p-t-15">
+
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>指定URL采集</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>小说URL</label>
+                        <input class="form-control" type="text" id="novel_url">
+                    </div>
+                    <div class="form-group">
+                        <label>采集源</label>
+                        <select class="form-control" id="url_select_rule">
+                            <option value="0">请选择</option>
+                            <each th:each="r : ${rule_list}">
+                                <option th:value="${r.getId()}" th:text="${r.getIndexUrl()}"></option>
+                            </each>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-label btn-primary" id="offer_url">
+                            <label>
+                                <i class="mdi mdi-upload"></i>
+                            </label> 添加任务
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>小说名搜索采集</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>书名 <span>(精确搜索)</span></label>
+                        <input class="form-control" type="text" id="input_novel" >
+                    </div>
+                    <div class="form-group">
+                        <label>采集源</label>
+                        <select class="form-control" id="novel_select">
+                            <option value="0">请选择</option>
+                            <each th:each="r : ${rule_list}">
+                                <option th:value="${r.getId()}" th:text="${r.getIndexUrl()}"></option>
+                            </each>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-label btn-primary" id="offer_novel"><label><i class="mdi mdi-upload"></i></label> 添加任务
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<!--消息提示-->
+<script src="/js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="/js/lightyear.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
+<script type="text/javascript" src="/ajax/ajax.js"></script>
+<script>
+    $(function (){
+       $("#offer_url").click(function (){
+           var id = $("#url_select_rule").val()
+           if(id == 0){
+               lightyear.notify("请选择采集源~", 'danger', 1000);
+               return ;
+           }
+           var url = $("#novel_url").val();
+           urlOfferQueueAjax(url,id);
+       }) ;
+
+       $("#offer_novel").click(function (){
+           var id = $("#novel_select").val()
+           if(id == 0){
+               lightyear.notify("请选择采集源~", 'danger', 1000);
+               return ;
+           }
+           var name = $("#input_novel").val();
+           searchOfferUrl(name,id);
+       });
+    });
+
+
+
+</script>
+</body>
+</html>
